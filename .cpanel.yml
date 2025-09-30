@@ -4,4 +4,6 @@ deployment:
     - export DEPLOYPATH=/home/hackvarg/public_html/
     - npm install
     - npm run build
+    - /bin/rm -rf $DEPLOYPATH/index.html $DEPLOYPATH/assets
     - /bin/cp -R dist/* $DEPLOYPATH
+    - /bin/ls -la $DEPLOYPATH
