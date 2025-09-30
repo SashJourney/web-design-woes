@@ -6,4 +6,5 @@ deployment:
     - npm run build
     - /bin/rm -rf $DEPLOYPATH/index.html $DEPLOYPATH/assets
     - /bin/cp -R dist/* $DEPLOYPATH
+    - /bin/cp public/.htaccess $DEPLOYPATH/.htaccess
     - /bin/ls -la $DEPLOYPATH
