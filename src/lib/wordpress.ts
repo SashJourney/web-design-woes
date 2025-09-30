@@ -1,7 +1,7 @@
 // WordPress API Configuration and Utilities
 
-// TODO: Replace with your actual WordPress URL after installation
-const WP_API_URL = import.meta.env.VITE_WP_API_URL || 'https://yourdomain.com/wp-json/wp/v2';
+// WordPress API URL for hackernull.com
+const WP_API_URL = 'https://hackernull.com/wp-json/wp/v2';
 
 export interface WordPressPost {
   id: number;
