@@ -4,9 +4,25 @@ import { ParticleBackground } from "@/components/ParticleBackground";
 import { FeaturedArticle } from "@/components/FeaturedArticle";
 import { CategoryCard } from "@/components/CategoryCard";
 import { Shield, Lock, Terminal, Bug, Network, Code } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchPosts, fetchCategories, getFeaturedImage, getAuthorName, formatDate, stripHtml } from "@/lib/wordpress";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Index = () => {
-  const featuredArticles = [
+  // Fetch posts from WordPress
+  const { data: posts = [], isLoading: postsLoading } = useQuery({
+    queryKey: ['posts'],
+    queryFn: () => fetchPosts({ per_page: 6 }),
+  });
+
+  // Fetch categories from WordPress
+  const { data: wpCategories = [], isLoading: categoriesLoading } = useQuery({
+    queryKey: ['categories'],
+    queryFn: fetchCategories,
+  });
+
+  // Fallback data when WordPress not configured yet
+  const fallbackArticles = [
     {
       title: "Advanced SQL Injection Techniques in 2025",
       excerpt: "Explore the latest SQL injection methods and how to protect your applications from these sophisticated attacks.",
@@ -30,7 +46,29 @@ const Index = () => {
     }
   ];
 
-  const categories = [
+  // Use WordPress posts or fallback to static content
+  const featuredArticles = posts.length > 0
+    ? posts.slice(0, 3).map(post => ({
+        title: post.title.rendered,
+        excerpt: stripHtml(post.excerpt.rendered),
+        date: formatDate(post.date),
+        author: getAuthorName(post),
+        image: getFeaturedImage(post),
+      }))
+    : fallbackArticles;
+
+  // Category icons mapping
+  const categoryIcons: Record<string, any> = {
+    'cyber-news-risks': Shield,
+    'penetration-testing': Bug,
+    'network-security': Network,
+    'cryptography': Lock,
+    'exploit-development': Code,
+    'terminal-tools': Terminal,
+  };
+
+  // Fallback categories
+  const fallbackCategories = [
     {
       name: "Cyber News & Risks",
       description: "Latest cybersecurity threats and industry news",
@@ -69,6 +107,16 @@ const Index = () => {
     }
   ];
 
+  // Use WordPress categories or fallback to static content
+  const categories = wpCategories.length > 0
+    ? wpCategories.slice(0, 6).map(cat => ({
+        name: cat.name,
+        description: cat.description || `Explore ${cat.name.toLowerCase()} articles`,
+        icon: categoryIcons[cat.slug] || Shield,
+        articleCount: cat.count,
+      }))
+    : fallbackCategories;
+
   return (
     <div className="min-h-screen flex flex-col relative">
       <ParticleBackground />
@@ -106,11 +154,19 @@ const Index = () => {
                 </div>
                 <h2 className="text-3xl font-bold">Featured Articles</h2>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {featuredArticles.map((article, index) => (
-                  <FeaturedArticle key={index} {...article} />
-                ))}
-              </div>
+              {postsLoading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[1, 2, 3].map((i) => (
+                    <Skeleton key={i} className="h-80 bg-card/50" />
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {featuredArticles.map((article, index) => (
+                    <FeaturedArticle key={index} {...article} />
+                  ))}
+                </div>
+              )}
             </div>
           </section>
 
@@ -124,11 +180,19 @@ const Index = () => {
                 </div>
                 <h2 className="text-3xl font-bold">Explore Topics</h2>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {categories.map((category, index) => (
-                  <CategoryCard key={index} {...category} />
-                ))}
-              </div>
+              {categoriesLoading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[1, 2, 3, 4, 5, 6].map((i) => (
+                    <Skeleton key={i} className="h-40 bg-card/50" />
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {categories.map((category, index) => (
+                    <CategoryCard key={index} {...category} />
+                  ))}
+                </div>
+              )}
             </div>
           </section>
         </main>
