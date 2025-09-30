@@ -1,11 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/hackvarg/public_html/
-    - cd /home/hackvarg/public_html/hackernull-app/
-    - npm install
-    - npm run build
-    - /bin/rm -rf $DEPLOYPATH/index.html $DEPLOYPATH/assets
-    - /bin/cp -R dist/* $DEPLOYPATH/
-    - /bin/cp public/.htaccess $DEPLOYPATH/.htaccess
-    - /bin/ls -la $DEPLOYPATH
+    - /bin/cp -R /home/hackvarg/public_html/hackernull-app/dist/* /home/hackvarg/public_html/
+    - /bin/cp /home/hackvarg/public_html/hackernull-app/public/.htaccess /home/hackvarg/public_html/.htaccess
