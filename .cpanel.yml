@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/hackvarg/public_html/
+    - export DEPLOYPATH=../
     - npm install
     - npm run build
     - /bin/rm -rf $DEPLOYPATH/index.html $DEPLOYPATH/assets
