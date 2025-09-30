@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/yourusername/public_html/
+    - export DEPLOYPATH=public_html/wp-content/themes/hackernull-theme
     - /bin/cp -R * $DEPLOYPATH
