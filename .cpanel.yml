@@ -1,5 +1,0 @@
----
-deployment:
-  tasks:
-    - /bin/cp -R /home/hackvarg/public_html/hackernull-app/dist/* /home/hackvarg/public_html/
-    - /bin/cp /home/hackvarg/public_html/hackernull-app/public/.htaccess /home/hackvarg/public_html/.htaccess
