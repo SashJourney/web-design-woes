@@ -1,0 +1,7 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/hackvarg/public_html/
+    - cd /home/hackvarg/public_html/hackernull-app/
+    - /bin/cp -R dist/* $DEPLOYPATH/
+    - /bin/cp public/.htaccess $DEPLOYPATH/.htaccess
