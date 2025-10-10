@@ -1,0 +1,8 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/hackvarg/public_html/
+    - export SOURCEPATH=/home/hackvarg/public_html/hackernull-app/
+    - cd $SOURCEPATH
+    - /bin/cp -R dist/* $DEPLOYPATH/
+    - echo "Deployment completed successfully"
