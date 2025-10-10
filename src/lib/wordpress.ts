@@ -8,6 +8,7 @@ export interface WordPressPost {
   date: string;
   modified: string;
   slug: string;
+  link: string;
   title: {
     rendered: string;
   };

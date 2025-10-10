@@ -7,11 +7,13 @@ interface FeaturedArticleProps {
   date: string;
   author: string;
   image: string;
+  link: string;
 }
 
-export const FeaturedArticle = ({ title, excerpt, date, author, image }: FeaturedArticleProps) => {
+export const FeaturedArticle = ({ title, excerpt, date, author, image, link }: FeaturedArticleProps) => {
   return (
-    <Card className="group cursor-pointer overflow-hidden border-border/40 bg-card hover:border-primary/50 transition-all duration-300 terminal-shadow hover:shadow-[0_0_30px_rgba(0,255,0,0.2)]">
+    <a href={link} target="_blank" rel="noopener noreferrer" className="block">
+      <Card className="group cursor-pointer overflow-hidden border-border/40 bg-card hover:border-primary/50 transition-all duration-300 terminal-shadow hover:shadow-[0_0_30px_rgba(0,255,0,0.2)]">
       <div className="aspect-video overflow-hidden">
         <img 
           src={image} 
@@ -38,5 +40,6 @@ export const FeaturedArticle = ({ title, excerpt, date, author, image }: Feature
         </div>
       </CardContent>
     </Card>
+    </a>
   );
 };

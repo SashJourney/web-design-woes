@@ -28,21 +28,24 @@ const Index = () => {
       excerpt: "Explore the latest SQL injection methods and how to protect your applications from these sophisticated attacks.",
       date: "Jan 15, 2025",
       author: "Alex Hunter",
-      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=450&fit=crop"
+      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=450&fit=crop",
+      link: "https://hackernull.com"
     },
     {
       title: "Zero-Day Vulnerability Discovery Process",
       excerpt: "Learn the systematic approach to finding and reporting zero-day vulnerabilities in modern software systems.",
       date: "Jan 12, 2025",
       author: "Sarah Chen",
-      image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=450&fit=crop"
+      image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=450&fit=crop",
+      link: "https://hackernull.com"
     },
     {
       title: "Building Your First Penetration Testing Lab",
       excerpt: "A comprehensive guide to setting up a professional penetration testing environment from scratch.",
       date: "Jan 10, 2025",
       author: "Mike Torres",
-      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=450&fit=crop"
+      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=450&fit=crop",
+      link: "https://hackernull.com"
     }
   ];
 
@@ -54,6 +57,7 @@ const Index = () => {
         date: formatDate(post.date),
         author: getAuthorName(post),
         image: getFeaturedImage(post),
+        link: post.link,
       }))
     : fallbackArticles;
 
