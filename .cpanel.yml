@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - /bin/cp -R * ../public_html/hackernull-app
-    - echo "Deployment completed"
+    - /bin/cp -R * /home/hackvarg/public_html/hackernull-app/
+    - echo "Files copied"
