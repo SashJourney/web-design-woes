@@ -1,8 +1,0 @@
----
-deployment:
-  tasks:
-    - export DEPLOYPATH=/home/hackvarg/public_html/
-    - /opt/cpanel/ea-nodejs20/bin/npm install
-    - /opt/cpanel/ea-nodejs20/bin/npm run build
-    - /bin/cp -R dist/* $DEPLOYPATH/
-    - echo "Deployment completed successfully"
