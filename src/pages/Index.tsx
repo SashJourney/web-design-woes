@@ -3,15 +3,22 @@ import { Footer } from "@/components/Footer";
 import { ParticleBackground } from "@/components/ParticleBackground";
 import { FeaturedArticle } from "@/components/FeaturedArticle";
 import { CategoryCard } from "@/components/CategoryCard";
+import { Newsletter } from "@/components/Newsletter";
 import { Shield, Lock, Terminal, Bug, Network, Code } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPosts, fetchCategories, getFeaturedImage, getAuthorName, formatDate, stripHtml } from "@/lib/wordpress";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const Index = () => {
-  // Fetch posts from WordPress
-  const { data: posts = [], isLoading: postsLoading } = useQuery({
-    queryKey: ['posts'],
+  // Fetch featured posts from WordPress
+  const { data: featuredPosts = [], isLoading: featuredLoading } = useQuery({
+    queryKey: ['featured-posts'],
+    queryFn: () => fetchPosts({ per_page: 3 }),
+  });
+
+  // Fetch latest posts from WordPress
+  const { data: latestPosts = [], isLoading: latestLoading } = useQuery({
+    queryKey: ['latest-posts'],
     queryFn: () => fetchPosts({ per_page: 6 }),
   });
 
@@ -46,9 +53,20 @@ const Index = () => {
     }
   ];
 
-  // Use WordPress posts or fallback to static content
-  const featuredArticles = posts.length > 0
-    ? posts.slice(0, 3).map(post => ({
+  // Use WordPress posts or fallback to static content for featured
+  const featuredArticles = featuredPosts.length > 0
+    ? featuredPosts.map(post => ({
+        title: post.title.rendered,
+        excerpt: stripHtml(post.excerpt.rendered),
+        date: formatDate(post.date),
+        author: getAuthorName(post),
+        image: getFeaturedImage(post),
+      }))
+    : fallbackArticles;
+
+  // Use WordPress posts or fallback to static content for latest
+  const latestArticles = latestPosts.length > 0
+    ? latestPosts.map(post => ({
         title: post.title.rendered,
         excerpt: stripHtml(post.excerpt.rendered),
         date: formatDate(post.date),
@@ -154,7 +172,7 @@ const Index = () => {
                 </div>
                 <h2 className="text-3xl font-bold">Featured Articles</h2>
               </div>
-              {postsLoading ? (
+              {featuredLoading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {[1, 2, 3].map((i) => (
                     <Skeleton key={i} className="h-80 bg-card/50" />
@@ -163,6 +181,32 @@ const Index = () => {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {featuredArticles.map((article, index) => (
+                    <FeaturedArticle key={index} {...article} />
+                  ))}
+                </div>
+              )}
+            </div>
+          </section>
+
+          {/* Latest News */}
+          <section className="py-12">
+            <div className="container">
+              <div className="mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-primary font-mono text-sm terminal-prompt"></span>
+                  <span className="text-primary font-mono text-sm">tail -f latest_news.log</span>
+                </div>
+                <h2 className="text-3xl font-bold">Latest News</h2>
+              </div>
+              {latestLoading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[1, 2, 3, 4, 5, 6].map((i) => (
+                    <Skeleton key={i} className="h-80 bg-card/50" />
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {latestArticles.map((article, index) => (
                     <FeaturedArticle key={index} {...article} />
                   ))}
                 </div>
@@ -195,6 +239,9 @@ const Index = () => {
               )}
             </div>
           </section>
+
+          {/* Newsletter */}
+          <Newsletter />
         </main>
 
         <Footer />

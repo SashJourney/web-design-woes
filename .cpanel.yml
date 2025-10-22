@@ -1,11 +1,6 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/hackvarg/public_html/wp-content/themes/hackernull-theme
+    - export DEPLOYPATH=/home/hackvarg/public_html/staging/hackernull-app
     - /bin/mkdir -p $DEPLOYPATH
-    - /bin/bash -c 'find "$DEPLOYPATH" -maxdepth 1 -not -name "." -not -name ".." -exec rm -rf {} + 2>/dev/null || true'
-    - cd /home/hackvarg/public_html/hackernull-app/
-    - npm install
-    - npm run build
     - /bin/cp -R dist/* $DEPLOYPATH/
-    - /bin/cp -f public/.htaccess $DEPLOYPATH/.htaccess || true

@@ -10,18 +10,18 @@ interface CategoryCardProps {
 
 export const CategoryCard = ({ name, description, icon: Icon, articleCount }: CategoryCardProps) => {
   return (
-    <Card className="group cursor-pointer border-border/40 bg-card hover:border-primary/50 transition-all duration-300 terminal-shadow hover:shadow-[0_0_30px_rgba(0,255,0,0.2)]">
-      <CardContent className="p-6">
-        <div className="mb-4 inline-flex p-3 rounded-lg bg-secondary">
-          <Icon className="h-6 w-6 text-primary" />
+    <Card className="group cursor-pointer border-primary/10 bg-[hsl(120,100%,8%)] hover:border-primary/30 transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,255,0,0.15)]">
+      <CardContent className="p-8">
+        <div className="mb-6">
+          <Icon className="h-8 w-8 text-primary" />
         </div>
-        <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
+        <h3 className="text-xl font-bold mb-3 text-foreground group-hover:text-primary transition-colors">
           {name}
         </h3>
-        <p className="text-sm text-muted-foreground mb-4">
+        <p className="text-sm text-primary/70 mb-4 leading-relaxed">
           {description}
         </p>
-        <div className="text-xs text-primary">
+        <div className="text-sm text-primary font-medium">
           {articleCount} articles
         </div>
       </CardContent>
